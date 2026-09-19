@@ -1,16 +1,18 @@
 import com.codeborne.selenide.SelenideElement;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import java.util.List;
 import java.util.stream.Stream;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class ParameterizedTests extends TestBase {
 
@@ -22,6 +24,7 @@ public class ParameterizedTests extends TestBase {
                 Arguments.of(CityEnum.KALININGRAD)
         );
     }
+    @Order(1)
     @ParameterizedTest(name = "Услуга «{0}» содержит описание: «{1}»")
     @CsvSource(value =  {
             "Избранное   | Жмите на сердечко",
@@ -31,9 +34,9 @@ public class ParameterizedTests extends TestBase {
     }, delimiter = '|')
     void service(String service, String expectedText) {
         $$("a").findBy(text(service)).click();
-        $("main").shouldHave(text(expectedText));
+        $("body").shouldHave(text(expectedText));
     }
-
+    @Order(3)
     @ParameterizedTest(name = "Город: {0}")
     @MethodSource("checkCities")
     void checkCity(CityEnum city) {
@@ -42,7 +45,7 @@ public class ParameterizedTests extends TestBase {
         cityLink.scrollTo();
         cityLink.shouldBe(visible);
     }
-
+    @Order(2)
     @ParameterizedTest(name = "Отоображаются кнопки: {0}")
     @ValueSource(strings = {"Профиль", "Журнал", "Поддержка", "rub"})
     void visionOfServices(String services) {
