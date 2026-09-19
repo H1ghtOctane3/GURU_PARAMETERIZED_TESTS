@@ -1,0 +1,1 @@
+rootProject.name = "GURU_PARAMETERIZED_TESTS"

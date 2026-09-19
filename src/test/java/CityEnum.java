@@ -1,16 +1,18 @@
 
-public enum Enum {
+public enum CityEnum {
 
         MOSCOW("Москва"),
-        PITER("Санкт-Питербург" ),
+        SAINTPETERSBURG("Санкт-Петербург" ),
         SOCHI("Сочи" ),
-        KAL("Калининград");
+        KALININGRAD("Калининград");
 
-        public final String name;
+        private final String title;
 
+        CityEnum(String title) {
+                this.title = title;
+        }
 
-        Enum(String name) {
-            this.name = name;
+        public String getTitle() {
+                return title;
         }
 }
-
